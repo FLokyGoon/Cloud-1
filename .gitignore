@@ -1,0 +1,10 @@
+.env
+.env.j2
+
+.terraform/
+.terraform.tfstate.backup
+terraform.tfstate
+terraform.tfvars
+
+/scripts
+/Docs

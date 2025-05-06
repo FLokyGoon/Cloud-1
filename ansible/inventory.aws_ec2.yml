@@ -1,0 +1,13 @@
+plugin: aws_ec2
+regions:
+  - eu-north-1
+# filters:
+#   tag:Name: cloud1-ec2
+keyed_groups:
+  - key: tags.Name
+    prefix: tag
+hostnames:
+  - instance-id
+
+# Nécessaire pour SSM
+strict: False

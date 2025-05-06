@@ -1,0 +1,30 @@
+- name: Create /opt/cloud1 directory
+  file:
+    path: /opt/cloud1
+    state: directory
+    mode: '0755'
+
+- name: Copy Docker Compose file
+  copy:
+    src: docker-compose.yml
+    dest: /opt/cloud1/docker-compose.yml
+    mode: '0644'
+  notify: Restart Docker Compose
+
+- name: Copy nginx directory
+  copy:
+    src: nginx/
+    dest: /opt/cloud1/nginx/
+    mode: '0755'
+  notify: Restart Docker Compose
+
+- name: Generate dynamic .env file from template
+  template:
+    src: .env.j2
+    dest: /opt/cloud1/.env
+    mode: '0600'
+
+- name: Launch Docker Compose
+  command: docker compose up -d
+  args:
+    chdir: /opt/cloud1
