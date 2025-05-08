@@ -1,14 +1,37 @@
 # ☁️ Cloud-1 — DevOps Infrastructure & Automation
 
-Welcome to the **Cloud-1 Project** documentation. This project, built as part of the 42 School curriculum, aims to **deploy a complete containerized infrastructure on a cloud provider** using **Terraform**, **Ansible**, and **Docker Compose**.
+Welcome to the **Cloud-1 Project** — a hands-on DevOps initiative developed as part of the **42 School curriculum**.  
+This repository demonstrates how to **design, provision, and manage cloud infrastructure** using industry-standard tools like:
 
-The goal is to **automate the deployment of a WordPress application stack**, including phpMyAdmin and a MySQL database, hosted on secure and scalable AWS infrastructure — with **TLS, persistence, and best practices** in mind.
+- 🏗️ **Terraform** for Infrastructure as Code (IaC)
+- ⚙️ **Ansible** for configuration management and provisioning
+- 🐳 **Docker Compose** for container orchestration
+
+The objective is to **automate the deployment of a complete WordPress application stack**, including:
+
+- A reverse-proxied **NGINX frontend**
+- A **PHP-FPM** backend running WordPress from source
+- A **MySQL** database with persistent storage
+- A **phpMyAdmin** interface for database management
+
+All services are deployed on **scalable AWS infrastructure**, with a strong focus on:
+
+- ✅ Security best practices (TLS, SSM, ALB)
+- ✅ Data persistence (EFS, RDS)
+- ✅ Automation and maintainability (IaC, CI/CD-ready)
 
 ---
 
+<p align="center">
+  <img src="image.png" alt="Cloud-1 Architecture Diagram" width="1000" style="border-radius: 15px;">
+</p>
+
+---
+
+
 ## 📚 Table of Contents
 
-1. [📦 01 — Prerequisites](01-prerequisites.md)  
+1. [📦 01 — Prerequisites](Docs/01-prerequisites.md)  
 2. [🏗️ 02 — Infrastructure with Terraform](02-infrastructure-terraform.md)  
 3. [🛠️ 03 — Provisioning with Ansible](03-provisioning-ansible.md)  
 4. [🐳 04 — Docker Stack Deployment](04-deployment-docker.md)  
@@ -44,4 +67,4 @@ The goal is to **automate the deployment of a WordPress application stack**, inc
 
 ---
 
-Ready to get started? 👉 Head to [01 — Prerequisites](01-prerequisites.md)
+Ready to get started? 👉 Head to [01 — Prerequisites](Docs/01-prerequisites.md)

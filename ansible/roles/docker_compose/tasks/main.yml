@@ -11,6 +11,11 @@
     mode: '0644'
   notify: Restart Docker Compose
 
+- name: Copy wp-config.php
+  copy:
+    src: wp-config.php
+    dest: /opt/cloud1/wp-config.php
+
 - name: Copy nginx directory
   copy:
     src: nginx/

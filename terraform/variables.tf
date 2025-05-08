@@ -172,3 +172,17 @@ variable "dns_remote_state_path" {
   description = "Path to the DNS remote state file (local path or S3 config key)"
   type        = string
 }
+
+#########################################################
+# CloudFront
+#########################################################
+
+variable "acm_cert_arn" {
+  description = "ACM certificate ARN in us-east-1 for HTTPS"
+  type        = string
+}
+
+variable "cloudfront_aliases" {
+  description = "Aliases (domain names) to associate with the distribution"
+  type        = list(string)
+}

@@ -14,12 +14,12 @@ module "iam_ssm" {
   assume_role_policy_service = var.iam_assume_role_service
 }
 
-module "acm" {
-  source    = "../modules/acm"
-  providers = { aws = aws.us_east_1 }
-  domain_name = var.acm_domain_name
-  san_names   = var.acm_san_names
-}
+# module "acm" {
+#   source    = "../modules/acm"
+#   providers = { aws = aws.us_east_1 }
+#   domain_name = var.acm_domain_name
+#   san_names   = var.acm_san_names
+# }
 
 module "ec2" {
   source               = "../modules/ec2"
@@ -62,7 +62,9 @@ module "cloudfront" {
   source        = "../modules/cloudfront"
   depends_on    = [module.s3]
   name          = var.project_name
-  bucket_domain = module.s3.bucket_domain
+  alb_dns_name  = module.alb.alb_dns
+  acm_cert_arn  = var.acm_cert_arn
+  aliases       = var.cloudfront_aliases
 }
 
 module "alb" {

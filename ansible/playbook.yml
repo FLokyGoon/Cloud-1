@@ -6,7 +6,7 @@
 
   vars:
     ansible_connection: community.aws.aws_ssm
-    ansible_aws_ssm_bucket_name: cloud1-static-asset-123456
+    ansible_aws_ssm_bucket_name: cloud1-static-assets-123456
     ansible_aws_ssm_region: eu-north-1
 
   vars_files:
@@ -15,4 +15,4 @@
   roles:
   - docker
   - docker_compose
-  - systemd_docker
+  # - systemd_docker

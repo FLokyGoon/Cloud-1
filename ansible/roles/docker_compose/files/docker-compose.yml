@@ -2,7 +2,7 @@ services:
   wordpress:
     image: wordpress:6.4.3-php8.2-fpm
     container_name: wordpress
-    restart: always
+    restart: "no"
     environment:
       WORDPRESS_DB_HOST: ${RDS_HOST}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
@@ -10,27 +10,31 @@ services:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - wordpress-data:/var/www/html
+      - ./wp-config.php:/var/www/html/wp-config.php:ro
     networks:
       - app
 
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpmyadmin
-    restart: always
+    restart: "no"
     environment:
       PMA_HOST: ${RDS_HOST}
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      PMA_ABSOLUTE_URI: https://pma.cloud-42project-overkill.me/
+    volumes:
+      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
+      - ./apache-servername.conf:/etc/apache2/conf-enabled/servername.conf:ro
     depends_on:
       - wordpress
     networks:
       - app
 
   nginx:
-    build:
-      context: ./nginx
+    image: nginx:stable
     container_name: nginx
-    restart: always
+    restart: "no"
     ports:
       - "80:80"
     volumes:
