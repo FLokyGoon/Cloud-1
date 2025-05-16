@@ -8,4 +8,4 @@ terraform.tfstate
 terraform.tfvars
 
 /scripts
-/Docs
+/ignore

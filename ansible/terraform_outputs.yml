@@ -1,7 +1,13 @@
 {
-  "alb_dns": "cloud1-alb-364799873.eu-north-1.elb.amazonaws.com",
+  "alb_dns": "cloud1-alb-1987066668.eu-north-1.elb.amazonaws.com",
   "bucket_name": "cloud1-static-assets-123456",
-  "ec2_instance_id": "i-0c67b3af7b73ea285",
-  "ec2_public_ip": "51.21.253.16",
+  "ec2_instance_id": [
+    "i-05acfcd7ee400c68f",
+    "i-052b2a6cb3f4c61f8"
+  ],
+  "ec2_public_ips": [
+    "16.171.242.121",
+    "13.53.197.178"
+  ],
   "rds_endpoint": "cloud1-db.crg2022w29n3.eu-north-1.rds.amazonaws.com"
 }

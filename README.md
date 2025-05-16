@@ -23,7 +23,7 @@ All services are deployed on **scalable AWS infrastructure**, with a strong focu
 ---
 
 <p align="center">
-  <img src="image.png" alt="Cloud-1 Architecture Diagram" width="1000" style="border-radius: 15px;">
+  <img src="Docs/img/cloud-1-42-project-diagram.png" alt="Cloud-1 Architecture Diagram" width="1000" style="border-radius: 15px;">
 </p>
 
 ---
@@ -32,13 +32,16 @@ All services are deployed on **scalable AWS infrastructure**, with a strong focu
 ## 📚 Table of Contents
 
 1. [📦 01 — Prerequisites](Docs/01-prerequisites.md)  
-2. [🏗️ 02 — Infrastructure with Terraform](02-infrastructure-terraform.md)  
-3. [🛠️ 03 — Provisioning with Ansible](03-provisioning-ansible.md)  
-4. [🐳 04 — Docker Stack Deployment](04-deployment-docker.md)  
-5. [🌐 05 — DNS with Route 53](05-dns-route53.md)  
-6. [🔐 06 — HTTPS with ACM and CloudFront](06-ssl-cloudfront.md)  
-7. [🛡️ 07 — Hardening and Monitoring](07-hardening-and-monitoring.md)  
-8. [✅ 08 — Conclusion](conclusion.md)
+2. [🏗️ 02 — Infrastructure with Terraform](Docs/02-infrastructure-terraform.md)  
+3. [🛠️ 03 — Provisioning with Ansible](Docs/03-provisioning-ansible.md)
+
+
+## Not yet release :
+  4. [🐳 04 — Docker Stack Deployment](Docs/04-deployment-docker.md)
+  5. [🌐 05 — DNS with Route 53](Docs/05-dns-route53.md)  
+  6. [🔐 06 — HTTPS with ACM and CloudFront](Docs/06-ssl-cloudfront.md)  
+  7. [🛡️ 07 — Hardening and Monitoring](Docs/07-hardening-and-monitoring.md)  
+  8. [✅ 08 — Conclusion](Docs/conclusion.md)
 
 ---
 

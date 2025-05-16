@@ -11,10 +11,15 @@
     mode: '0644'
   notify: Restart Docker Compose
 
-- name: Copy wp-config.php
+- name: Copy phpmyadmin directory
   copy:
-    src: wp-config.php
-    dest: /opt/cloud1/wp-config.php
+    src: phpmyadmin/
+    dest: /opt/cloud1/phpmyadmin/
+
+- name: Copy wordpress directory
+  copy:
+    src: wordpress/
+    dest: /opt/cloud1/wordpress/
 
 - name: Copy nginx directory
   copy:

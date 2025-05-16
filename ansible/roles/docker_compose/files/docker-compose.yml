@@ -2,7 +2,7 @@ services:
   wordpress:
     image: wordpress:6.4.3-php8.2-fpm
     container_name: wordpress
-    restart: "no"
+    restart: always
     environment:
       WORDPRESS_DB_HOST: ${RDS_HOST}
       WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
@@ -10,22 +10,32 @@ services:
       WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - wordpress-data:/var/www/html
-      - ./wp-config.php:/var/www/html/wp-config.php:ro
+      - ./wordpress/wp-config.php:/var/www/html/wp-config.php:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/wp-login.php || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - app
 
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpmyadmin
-    restart: "no"
+    restart: always
     environment:
       PMA_HOST: ${RDS_HOST}
       PMA_PORT: 3306
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      PMA_ABSOLUTE_URI: https://pma.cloud-42project-overkill.me/
+      PMA_ABSOLUTE_URI: ${PMA_ABSOLUTE_URI}
     volumes:
-      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
-      - ./apache-servername.conf:/etc/apache2/conf-enabled/servername.conf:ro
+      - ./phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
+      - ./phpmyadmin/apache-servername.conf:/etc/apache2/conf-enabled/servername.conf:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     depends_on:
       - wordpress
     networks:
@@ -34,7 +44,7 @@ services:
   nginx:
     image: nginx:stable
     container_name: nginx
-    restart: "no"
+    restart: always
     ports:
       - "80:80"
     volumes:

@@ -14,21 +14,22 @@ module "iam_ssm" {
   assume_role_policy_service = var.iam_assume_role_service
 }
 
-# module "acm" {
-#   source    = "../modules/acm"
-#   providers = { aws = aws.us_east_1 }
-#   domain_name = var.acm_domain_name
-#   san_names   = var.acm_san_names
-# }
+module "ec2_sg" {
+  source = "../modules/ec2_sg"
+  sg_name   = "${var.project_name}-web-sg"
+  vpc_id = module.vpc.vpc_id
+}
 
 module "ec2" {
-  source               = "../modules/ec2"
-  depends_on           = [module.iam_ssm, module.vpc]
-  ami_id               = var.ec2_ami_id
-  instance_type        = var.ec2_instance_type
-  subnet_id            = module.vpc.public_subnet[0]
-  vpc_id               = module.vpc.vpc_id
-  iam_instance_profile = module.iam_ssm.instance_profile_name
+  source                 = "../modules/ec2"
+  count                  = 2
+  depends_on             = [module.iam_ssm, module.vpc]
+  ami_id                 = var.ec2_ami_id
+  instance_type          = var.ec2_instance_type
+  subnet_id              = module.vpc.public_subnet[count.index]
+  iam_instance_profile   = module.iam_ssm.instance_profile_name
+  instance_name 		     = "${var.project_name}-wordpress-server"
+  ec2_security_group_ids = module.ec2_sg.security_group_id
 }
 
 module "efs" {
@@ -36,7 +37,7 @@ module "efs" {
   depends_on        = [module.vpc]
   efs_name          = var.efs_name
   subnet_ids        = module.vpc.public_subnet
-  security_group_id = module.ec2.security_group_id
+  security_group_id = module.ec2_sg.security_group_id
   transition_to_ia  = var.efs_transition_to_ia
 }
 
@@ -48,7 +49,7 @@ module "rds" {
   db_user               = var.rds_db_username
   db_password           = var.rds_db_password
   subnet_ids            = module.vpc.public_subnet
-  ec2_security_group_id = module.ec2.security_group_id
+  ec2_security_group_id = module.ec2_sg.security_group_id
   vpc_id                = module.vpc.vpc_id
 }
 
@@ -73,7 +74,7 @@ module "alb" {
   name              = var.project_name
   vpc_id            = module.vpc.vpc_id
   subnet_ids        = module.vpc.public_subnet
-  security_group_id = module.ec2.security_group_id
+  security_group_id = module.ec2_sg.security_group_id
   app_port          = var.alb_listener_port
 }
 
@@ -86,10 +87,18 @@ module "dns_records" {
 }
 
 resource "aws_lb_target_group_attachment" "ec2_manual" {
+  count            = length(module.ec2)
   target_group_arn = module.alb.target_group_arn
-  target_id        = module.ec2.instance_id
+  target_id        = module.ec2[count.index].instance_id
   port             = var.alb_listener_port
 }
+
+# module "acm" {
+#   source    = "../modules/acm"
+#   providers = { aws = aws.us_east_1 }
+#   domain_name = var.acm_domain_name
+#   san_names   = var.acm_san_names
+# }
 
 # module "asg" {
 #   source                = "../modules/asg"
